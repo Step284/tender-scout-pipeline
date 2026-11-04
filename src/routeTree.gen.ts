@@ -10,33 +10,54 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiPublicMakeCallbackRouteImport } from './routes/api/public/make/callback'
+import { Route as ApiPublicMakeProfileRouteImport } from './routes/api/public/make/profile'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicMakeCallbackRoute = ApiPublicMakeCallbackRouteImport.update({
+  id: '/api/public/make/callback',
+  path: '/api/public/make/callback',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicMakeProfileRoute = ApiPublicMakeProfileRouteImport.update({
+  id: '/api/public/make/profile',
+  path: '/api/public/make/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/api/public/make/callback': typeof ApiPublicMakeCallbackRoute
+  '/api/public/make/profile': typeof ApiPublicMakeProfileRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/api/public/make/callback': typeof ApiPublicMakeCallbackRoute
+  '/api/public/make/profile': typeof ApiPublicMakeProfileRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/api/public/make/callback': typeof ApiPublicMakeCallbackRoute
+  '/api/public/make/profile': typeof ApiPublicMakeProfileRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/api/public/make/callback' | '/api/public/make/profile'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/api/public/make/callback' | '/api/public/make/profile'
+  id:
+    '__root__' | '/' | '/api/public/make/callback' | '/api/public/make/profile'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ApiPublicMakeCallbackRoute: typeof ApiPublicMakeCallbackRoute
+  ApiPublicMakeProfileRoute: typeof ApiPublicMakeProfileRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +69,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/make/callback': {
+      id: '/api/public/make/callback'
+      path: '/api/public/make/callback'
+      fullPath: '/api/public/make/callback'
+      preLoaderRoute: typeof ApiPublicMakeCallbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/make/profile': {
+      id: '/api/public/make/profile'
+      path: '/api/public/make/profile'
+      fullPath: '/api/public/make/profile'
+      preLoaderRoute: typeof ApiPublicMakeProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ApiPublicMakeCallbackRoute: ApiPublicMakeCallbackRoute,
+  ApiPublicMakeProfileRoute: ApiPublicMakeProfileRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
