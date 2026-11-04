@@ -445,6 +445,10 @@ export type Database = {
         Returns: boolean
       }
       is_org_member: { Args: { _org: string }; Returns: boolean }
+      update_my_display_name: {
+        Args: { _name: string; _org: string }
+        Returns: undefined
+      }
     }
     Enums: {
       automation_status: "queued" | "sent" | "failed" | "processed"
